@@ -11,64 +11,77 @@ function addBookToLibrary(title, author, pages, read) {
   const newBook = new Book(title, author, pages, read);
   myLibrary.push(newBook);
 }
-document.querySelector("#submit").addEventListener("click", () => {
+
+document.querySelector("#submit").addEventListener("click", (event) => {
   event.preventDefault();
   const title = document.querySelector("#title").value;
   const author = document.querySelector("#author").value;
   const pages = document.querySelector("#pages").value;
   const read = document.querySelector("#read").checked;
   addBookToLibrary(title, author, pages, read);
+  displayBooks();
   console.log(myLibrary);
 });
+
 document.querySelector("#openForm").addEventListener("click", () => {
   document.querySelector(".popup-form").style.display = "flex";
 });
+
 document.querySelector("#closeForm").addEventListener("click", () => {
   document.querySelector(".popup-form").style.display = "none";
 });
+
 window.addEventListener("click", (e) => {
   if (e.target == document.querySelector(".popup-form")) {
     document.querySelector(".popup-form").style.display = "none";
   }
 });
-document.getElementById("submit").addEventListener("click", () => {
-  const title = document.querySelector("#title").value;
-  const author = document.querySelector("#author").value;
-  const pages = document.querySelector("#pages").value;
-  const isRead = document.querySelector("#read").checked;
 
-  const card = document.createElement("div");
-  card.classList.add("card");
+function displayBooks() {
+  const container = document.querySelector(".container");
+  container.textContent = "";
 
-  const titleElement = document.createElement("h2");
-  titleElement.textContent = title;
+  myLibrary.forEach((book, index) => {
+    const card = document.createElement("div");
+    card.classList.add("card");
 
-  const authorElement = document.createElement("p");
-  authorElement.textContent = `Author: ${author}`;
+    const titleElement = document.createElement("h2");
+    titleElement.textContent = book.title;
 
-  const pagesElement = document.createElement("p");
-  pagesElement.textContent = `Pages: ${pages}`;
+    const authorElement = document.createElement("p");
+    authorElement.textContent = `Author: ${book.author}`;
 
-  const statusElement = document.createElement("p");
-  statusElement.textContent = `Status: ${isRead ? "read" : "un-read"}`;
+    const pagesElement = document.createElement("p");
+    pagesElement.textContent = `Pages: ${book.pages}`;
 
-  const removeButton = document.createElement("button");
-  removeButton.classList.add("remove");
-  removeButton.textContent = "remove";
+    const statusElement = document.createElement("p");
+    statusElement.textContent = `Status: ${book.read ? "read" : "un-read"}`;
 
-  const changeStatusButton = document.createElement("button");
-  changeStatusButton.classList.add("change");
-  changeStatusButton.textContent = "change status";
+    const removeButton = document.createElement("button");
+    removeButton.classList.add("remove");
+    removeButton.textContent = "remove";
+    removeButton.addEventListener("click", () => {
+      myLibrary.splice(index, 1);
+      displayBooks();
+    });
 
-  card.appendChild(titleElement);
-  card.appendChild(authorElement);
-  card.appendChild(pagesElement);
-  card.appendChild(statusElement);
-  card.appendChild(changeStatusButton);
-  card.appendChild(removeButton);
+    const changeStatusButton = document.createElement("button");
+    changeStatusButton.classList.add("change");
+    changeStatusButton.textContent = "change status";
+    changeStatusButton.addEventListener("click", () => {
+      book.read = !book.read;
+      displayBooks();
+    });
 
-  document.querySelector(".container").appendChild(card);
+    card.appendChild(titleElement);
+    card.appendChild(authorElement);
+    card.appendChild(pagesElement);
+    card.appendChild(statusElement);
+    card.appendChild(changeStatusButton);
+    card.appendChild(removeButton);
+
+    container.appendChild(card);
+  });
 
   document.querySelector(".popup-form").style.display = "none";
-});
-
+}
