@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>My Library</h1>
+    <button id="openForm">Add new book </button>
+    <form action="" class="popup-form">
+        <div class="form-container">
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title">
+        <label for="author">Author</label>
+        <input type="text" name="author" id="author">
+        <label for="pages">Pages</label>
+        <input type="number" name="pages" id="pages">
+        <label for="read">Read</label>
+        <input type="checkbox" name="read" id="read">
+        <button  id="submit">Add Book</button>  
+        <button id="closeForm">Close</button>
+    </div>
+    </form>
+    <div class="container">
+        <div class="card">
+            <h2>48 laws of power</h2>
+            <p>Author : Robert Green</p>
+            <p>Pages : 420</p>
+            <p>Status : read</p>
+            <button class="change">change status</button>
+            <button class="remove">remove</button>
+    </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
